@@ -63,8 +63,8 @@ runs:
       shell: bash
       run: |
         IMAGES="${{ steps.meta.outputs.tags }}"
-        IMAGES="${IMAGES//'\n/'/' '}"
-        IMAGES="${IMAGES//'\r/'/''}"
+        IMAGES="${IMAGES//$'\n'/' '}"
+        IMAGES="${IMAGES//$'\r'/''}"
         echo "::set-output name=IMAGES::$IMAGES"
 
     - name: print tags
