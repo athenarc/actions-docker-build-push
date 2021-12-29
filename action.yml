@@ -16,7 +16,7 @@ inputs:
 outputs:
   images: 
     description: "tagged images"
-    value: "${{ steps.meta.outputs.tags }}"
+    value: "${{ steps.set_outputs.outputs.IMAGES }}"
 runs:
   using: "composite"
   steps:
@@ -58,3 +58,10 @@ runs:
         push: ${{ github.event_name != 'pull_request' }}
         tags: ${{ steps.meta.outputs.tags }}
 
+    - name: set output
+      id: set_outputs
+      shell: bash
+      run: |
+        IMAGES="${{ steps.meta.outputs.tags }}"
+        IMAGES="${IMAGES//'\n/'/' '}"
+        echo "::set-output name=IMAGES::$IMAGES"
